@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>清明春假城市2025-2026年度对比分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@3.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+:root {
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --primary: #2b6cb0;
+  --primary-light: #ebf4ff;
+  --accent: #ed8936;
+  --accent2: #48bb78;
+  --text: #1a202c;
+  --text-light: #718096;
+  --border: #e2e8f0;
+  --red: #e53e3e;
+  --green: #38a169;
+  --orange: #dd6b20;
+  --purple: #805ad5;
+  --teal: #319795;
+  --gold: #d69e2e;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.6; }
+body.dark { --bg: #1a202c; --card: #2d3748; --text: #f7fafc; --text-light: #a0aec0; --border: #4a5568; }
+
+header { background: linear-gradient(135deg, #2b6cb0 0%, #3182ce 100%); color: white; padding: 32px 40px; }
+header h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+header p { opacity: 0.85; font-size: 14px; }
+header .badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 12px; margin-top: 8px; }
+
+nav { background: white; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+body.dark nav { background: var(--card); }
+.nav-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 4px; padding: 0 24px; overflow-x: auto; }
+.nav-btn { padding: 12px 18px; border: none; background: none; cursor: pointer; font-size: 14px; color: var(--text-light); border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; }
+.nav-btn:hover { color: var(--primary); }
+.nav-btn.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+section { display: none; }
+section.active { display: block; }
+
+/* Cards */
+.card { background: var(--card); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid var(--border); }
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.card-title { font-size: 16px; font-weight: 700; color: var(--text); }
+.card-subtitle { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+/* KPI tiles */
+.kpi { background: var(--card); border-radius: 10px; padding: 20px; border: 1px solid var(--border); }
+.kpi-label { font-size: 12px; color: var(--text-light); margin-bottom: 8px; font-weight: 500; }
+.kpi-value { font-size: 28px; font-weight: 800; color: var(--text); line-height: 1; }
+.kpi-sub { font-size: 11px; color: var(--text-light); margin-top: 6px; }
+.kpi-change { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-top: 6px; }
+.kpi-change.up { background: #c6f6d5; color: #276749; }
+.kpi-change.down { background: #fed7d7; color: #c53030; }
+
+/* Tables */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th { background: #f8fafc; padding: 10px 12px; text-align: left; font-weight: 600; color: var(--text-light); border-bottom: 2px solid var(--border); white-space: nowrap; }
+.data-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
+.data-table tr:hover td { background: var(--primary-light); }
+.data-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.data-table .positive { color: var(--green); font-weight: 600; }
+.data-table .negative { color: var(--red); font-weight: 600; }
+.data-table .highlight { background: #fffbeb; }
+.data-table .section-row td { background: #f0f4f8; font-weight: 700; color: var(--primary); font-size: 12px; }
+
+/* Method footnote */
+.method-note { background: #fffbeb; border: 1px solid #fbd38d; border-radius: 8px; padding: 14px 16px; margin: 16px 0 8px; font-size: 12px; color: #744210; }
+.method-note strong { display: block; margin-bottom: 6px; }
+.method-note ul { margin: 0; padding-left: 18px; }
+.method-note li { margin-bottom: 3px; }
+
+/* Charts */
+.chart-wrap { position: relative; height: 320px; }
+.chart-wrap.tall { height: 400px; }
+
+/* Tags */
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.tag-red { background: #fed7d7; color: #c53030; }
+.tag-green { background: #c6f6d5; color: #276749; }
+.tag-blue { background: #bee3f8; color: #2b6cb0; }
+.tag-orange { background: #feebc8; color: #c05621; }
+.tag-purple { background: #e9d8fd; color: #553c9a; }
+.tag-teal { background: #b2f5ea; color: #234e52; }
+
+/* Year badges */
+.yr { font-weight: 800; font-size: 15px; }
+.yr25 { color: #a0aec0; }
+.yr26 { color: var(--primary); }
+
+/* Diff indicator */
+.diff-bar { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.diff-bar-inner { flex: 1; height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; position: relative; }
+.diff-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+.diff-fill.pos { background: var(--green); }
+.diff-fill.neg { background: var(--red); }
+
+/* Page title */
+.page-title { font-size: 20px; font-weight: 700; margin: 8px 0 4px; color: var(--text); }
+.page-sub { font-size: 13px; color: var(--text-light); margin-bottom: 20px; }
+
+.section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); margin: 20px 0 8px; }
+
+/* Methodology section */
+.meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.meta-item { background: #f8fafc; border-radius: 8px; padding: 16px; }
+body.dark .meta-item { background: #1a202c; }
+.meta-item-title { font-weight: 700; font-size: 13px; color: var(--primary); margin-bottom: 8px; }
+.meta-item table { font-size: 12px; width: 100%; }
+.meta-item td { padding: 3px 6px; }
+.meta-item td:first-child { color: var(--text-light); }
+
+/* Comparison table colors */
+.t25 { color: #a0aec0; font-weight: 600; }
+.t26 { color: #2b6cb0; font-weight: 700; }
+
+/* Tab inside card */
+.inner-tabs { display: flex; gap: 4px; margin-bottom: 16px; }
+.inner-tab { padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px; background: none; cursor: pointer; font-size: 13px; color: var(--text-light); transition: all 0.2s; }
+.inner-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+.info-box { background: #ebf8ff; border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0; padding: 14px 16px; font-size: 13px; margin: 12px 0; color: #2a4365; }
+.info-box.orange { background: #fffaf0; border-color: var(--accent); color: #744210; }
+.info-box.green { background: #f0fff4; border-color: var(--accent2); color: #276749; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .grid-2, .grid-3, .grid-4, .meta-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🌸 清明春假城市需求年度对比分析报告</h1>
+  <p>2025年 vs 2026年 · 清明春假城市 &amp; 五一春假城市 · 客群 &amp; 酒店特征多维分析</p>
+  <span class="badge">📊 数据口径：离店年份 × 节假日类型 × 城市类型 · 含计算批注</span>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="showSection('overview')">📋 总览</button>
+    <button class="nav-btn" onclick="showSection('qmqc_yoy')">📈 清明春假城市YoY</button>
+    <button class="nav-btn" onclick="showSection('wuyi_yoy')">📈 五一春假城市YoY</button>
+    <button class="nav-btn" onclick="showSection('star_prov')">🏨 星级×省份分析</button>
+    <button class="nav-btn" onclick="showSection('order_type')">🔍 订单类型差异</button>
+    <button class="nav-btn" onclick="showSection('methodology')">📖 计算口径</button>
+  </div>
+</nav>
+
+<div class="container">
+
+<!-- ================================================
+     SECTION 1: OVERVIEW
+     ================================================ -->
+<section id="overview" class="active">
+
+<div class="method-note">
+  <strong>⚙️ 计算口径说明</strong>
+  <ul>
+    <li><b>数据范围</b>：离店年份 = 2025 / 2026，节假日类型含「春假-清明」「清明」两类，含「清明春假城市」「五一春假城市」两个城市分类</li>
+    <li><b>订单量</b>：sum(订单量)，指分组内订单记录数加权后的总订单量（条）</li>
+    <li><b>加权间夜均价</b>：(每条订单间夜均价 × 间夜数) / 总间夜数，以间夜数为权重加权平均，消除单量波动影响</li>
+    <li><b>高星占比</b>：星级分类 =「高星（4-5星）」的订单量 / 总订单量 × 100%</li>
+    <li><b>8天+预定</b>：提前预定时长 ≥ 8 天的订单量 / 总订单量 × 100%</li>
+    <li><b>Tapp占比</b>：订单渠道 =「Tapp」的订单量 / 总订单量 × 100%</li>
+    <li><b>主节假日出游</b>：客群旅行特征分类 =「主节假日出游」的订单量 / 总订单量 × 100%</li>
+  </ul>
+</div>
+
+<p class="section-label">🔑 核心结论速览</p>
+<div class="grid-4" style="margin-bottom:20px">
+  <div class="kpi">
+    <div class="kpi-label">清明春假城市 春假-清明 订单量YoY</div>
+    <div class="kpi-value" style="color:var(--green)">+36.3%</div>
+    <div class="kpi-sub">9.1万 → 12.5万单</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">清明春假城市 高星率YoY增幅</div>
+    <div class="kpi-value" style="color:var(--accent)">+53%</div>
+    <div class="kpi-sub">12.4% → 18.9%（+6.6pp）</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">清明春假城市 提前8天+预定率YoY</div>
+    <div class="kpi-value" style="color:var(--purple)">+118%</div>
+    <div class="kpi-sub">23.5% → 51.3%（+27.8pp）</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">清明春假城市 加权间夜均价YoY</div>
+    <div class="kpi-value" style="color:var(--teal)">+27.9%</div>
+    <div class="kpi-sub">173元 → 221元/晚</div>
+  </div>
+</div>
+
+<!-- 清明春假城市 全指标对比表 -->
+<div class="card">
+  <div class="card-header">
+    <div><div class="card-title">📊 清明春假城市 全维度指标对比（2025 vs 2026）</div>
+    <div class="card-subtitle">口径：是否清明春假城市 = 1.清明春假城市 | 含春假-清明 &amp; 清明两期</div></div>
+  </div>
+
+  <table class="data-table" id="overview-table">
+    <thead>
+      <tr>
+        <th>节假日</th>
+        <th class="num">年份</th>
+        <th class="num">订单量</th>
+        <th class="num">总间夜</th>
+        <th class="num">总收入(元)</th>
+        <th class="num">人均间夜</th>
+        <th class="num">加权间夜均价</th>
+        <th class="num">高星占比%</th>
+        <th class="num">低星占比%</th>
+        <th class="num">异省占比%</th>
+        <th class="num">主节假日出游%</th>
+        <th class="num">老客%</th>
+        <th class="num">8天+预定%</th>
+        <th class="num">Tapp%</th>
+        <th class="num">平均提前预定天数</th>
+      </tr>
+    </thead>
+    <tbody id="overview-tbody"></tbody>
+  </table>
+</div>
+
+<!-- 五大核心指标YoY变化 -->
+<div class="grid-2">
+  <div class="card">
+    <div class="card-title">📊 清明春假城市 核心指标年度增长率对比</div>
+    <div class="card-subtitle">春假-清明期间 vs 清明期间</div>
+    <div class="chart-wrap">
+      <canvas id="kpiYoyChart"></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">📊 两类城市 春假-清明期间 订单量对比</div>
+    <div class="card-subtitle">清明春假城市 vs 五一春假城市 vs 非春假城市</div>
+    <div class="chart-wrap">
+      <canvas id="orderBarChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- 省份高星率变化 -->
+<div class="card">
+  <div class="card-title">🌍 清明春假城市口径 TOP省份 高星率 &amp; 8天+预定率 变化（2025→2026）</div>
+  <div class="card-subtitle">仅展示2025年订单量≥1000单的省份 | 高星率变化 = 2026高星率 - 2025高星率</div>
+  <table class="data-table" id="prov-table">
+    <thead><tr><th>省份</th><th class="num">2025订单量</th><th class="num">2025高星%</th><th class="num">2026高星%</th><th class="num">高星率变化pp</th><th class="num">2025 8天+%</th><th class="num">2026 8天+%</th><th class="num">8天+变化pp</th></tr></thead>
+    <tbody id="prov-tbody"></tbody>
+  </table>
+</div>
+
+</section>
+
+<!-- ================================================
+     SECTION 2: 清明春假城市 YoY
+     ================================================ -->
+<section id="qmqc_yoy">
+
+<div class="method-note">
+  <strong>⚙️ 清明春假城市分析口径说明</strong>
+  <ul>
+    <li><b>清明春假城市</b>：是否清明春假城市 =「1.清明春假城市」，含江苏/四川/浙江省内城市的订单</li>
+    <li><b>对比基准</b>：非清明春假城市（是否清明春假城市 =「2.非清明春假城市」）作为对照组</li>
+    <li><b>春假-清明期间</b>：节假日类型 =「03.春假-清明」，对应学校春假期间（含清明）</li>
+    <li><b>清明期间</b>：节假日类型 =「04.清明」，仅清明节法定节假日</li>
+    <li><b>YoY计算</b>：(2026年指标值 - 2025年指标值) / 2025年指标值 × 100%</li>
+  </ul>
+</div>
+
+<p class="page-title">📈 清明春假城市 年度对比（2025 vs 2026）</p>
+<p class="page-sub">聚焦清明春假城市两类节假日期间的体量、质量、客群结构年度变化</p>
+
+<!-- KPI -->
+<div class="grid-4" style="margin-bottom:20px">
+  <div class="kpi">
+    <div class="kpi-label">春假-清明 订单量YoY</div>
+    <div class="kpi-value" style="color:var(--green)">+36.3%</div>
+    <div class="kpi-sub">9.1万 → 12.5万单</div>
+    <span class="kpi-change up">↑ 显著增长</span>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">清明 订单量YoY</div>
+    <div class="kpi-value" style="color:var(--green)">+24.7%</div>
+    <div class="kpi-sub">13.8万 → 17.2万单</div>
+    <span class="kpi-change up">↑ 稳健增长</span>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">春假-清明 高星率YoY</div>
+    <div class="kpi-value" style="color:var(--accent)">+53%</div>
+    <div class="kpi-sub">12.4% → 18.9%（+6.6pp）</div>
+    <span class="kpi-change up">↑ 品质升级显著</span>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">春假-清明 平均提前预定YoY</div>
+    <div class="kpi-value" style="color:var(--purple)">+379%</div>
+    <div class="kpi-sub">1.8天 → 8.6天</div>
+    <span class="kpi-change up">↑ 规划性大幅增强</span>
+  </div>
+</div>
+
+<!-- 核心YoY指标 -->
+<div class="card">
+  <div class="card-title">📋 清明春假城市 详细YoY对比表（计算口径批注版）</div>
+  <table class="data-table">
+    <thead><tr><th>指标名称</th><th>计算口径</th><th>2025<br>春假-清明</th><th>2026<br>春假-清明</th><th>YoY%<br>春假-清明</th><th>2025<br>清明</th><th>2026<br>清明</th><th>YoY%<br>清明</th></tr></thead>
+    <tbody id="qmqc-yoy-tbody"></tbody>
+  </table>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="card-title">📊 春假-清明期间 订单量 &amp; 高星率 双轴对比</div>
+    <div class="chart-wrap tall">
+      <canvas id="qmqcSpringChart"></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">📊 清明期间 订单量 &amp; 高星率 双轴对比</div>
+    <div class="chart-wrap tall">
+      <canvas id="qmqcQingChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- 与非清明春假城市对比 -->
+<div class="card">
+  <div class="card-title">📋 清明春假城市 vs 非清明春假城市 YoY增幅对比</div>
+  <div class="card-subtitle">正值=春假城市增速高于非春假城市（体现春假城市增量优势）</div>
+  <table class="data-table">
+    <thead><tr><th>指标</th><th>口径</th><th>春假-清明 城市YoY%</th><th>春假-清明 非城市YoY%</th><th>差值pp</th><th>清明 城市YoY%</th><th>清明 非城市YoY%</th><th>差值pp</th></tr></thead>
+    <tbody id="qmqc-diff-tbody"></tbody>
+  </table>
+</div>
+
+</section>
+
+<!-- ================================================
+     SECTION 3: 五一春假城市 YoY
+     ================================================ -->
+<section id="wuyi_yoy">
+
+<div class="method-note">
+  <strong>⚙️ 五一春假城市分析口径说明</strong>
+  <ul>
+    <li><b>五一春假城市</b>：是否五一春假城市 =「1.五一春假城市」，指浙江省/上海市等五一春假城市的订单</li>
+    <li><b>注意</b>：本数据集仅含清明/春假-清明数据，五一尚未到来，趋势可作为五一预测参考</li>
+    <li><b>对比基准</b>：非五一春假城市（同节假日同期）</li>
+  </ul>
+</div>
+
+<p class="page-title">📈 五一春假城市 年度对比（2025 vs 2026）</p>
+<p class="page-sub">五一春假城市（浙江/上海为主）在清明期间的表现，对五一假期具有预测参考价值</p>
+
+<div class="grid-4" style="margin-bottom:20px">
+  <div class="kpi">
+    <div class="kpi-label">春假-清明 订单量YoY</div>
+    <div class="kpi-value" style="color:var(--accent)">+8.0%</div>
+    <div class="kpi-sub">5.6万 → 6.0万单</div>
+    <span class="kpi-change up">↑ 温和增长</span>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">清明 订单量YoY</div>
+    <div class="kpi-value" style="color:var(--text-light)">+0.6%</div>
+    <div class="kpi-sub">8.0万 → 8.1万单</div>
+    <span class="kpi-change down">→ 基本持平</span>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">春假-清明 高星率YoY</div>
+    <div class="kpi-value" style="color:var(--accent)">+15.7%</div>
+    <div class="kpi-sub">13.2% → 15.2%（+2.1pp）</div>
+    <span class="kpi-change up">↑ 增长</span>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">春假-清明 8天+预定YoY</div>
+    <div class="kpi-value" style="color:var(--purple)">+34.0%</div>
+    <div class="kpi-sub">24.3% → 32.6%（+8.3pp）</div>
+    <span class="kpi-change up">↑ 规划性增强</span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">📋 五一春假城市 详细YoY对比表</div>
+  <table class="data-table">
+    <thead><tr><th>指标名称</th><th>计算口径</th><th>2025<br>春假-清明</th><th>2026<br>春假-清明</th><th>YoY%<br>春假-清明</th><th>2025<br>清明</th><th>2026<br>清明</th><th>YoY%<br>清明</th></tr></thead>
+    <tbody id="wuyi-yoy-tbody"></tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="card-title">📋 五一春假城市 vs 非五一春假城市 YoY增幅对比</div>
+  <div class="card-subtitle">正值=五一春假城市增速高于非五一春假城市</div>
+  <table class="data-table">
+    <thead><tr><th>指标</th><th>口径</th><th>春假-清明 城市YoY%</th><th>春假-清明 非城市YoY%</th><th>城市-非城市 差值pp</th><th>清明 城市YoY%</th><th>清明 非城市YoY%</th><th>城市-非城市 差值pp</th></tr></thead>
+    <tbody id="wuyi-diff-tbody"></tbody>
+  </table>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="card-title">📊 两类春假城市 春假-清明期间 指标对比（2026年）</div>
+    <div class="chart-wrap tall">
+      <canvas id="wuyiCompChart"></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">📊 两类城市 清明期间 指标对比（2026年）</div>
+    <div class="chart-wrap tall">
+      <canvas id="wuyiQingCompChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="info-box orange">
+  <strong>⚠️ 注意：五一春假城市清明数据解读</strong><br>
+  五一春假城市在清明期间的订单量基本持平（YoY仅+0.6%），但高星率、间夜均价、8天+预定率均有显著提升，说明<strong>体量趋于饱和，但质量在升级</strong>。这一趋势对五一假期预测有参考价值：五一春假城市五一期间的订单量增长可能有限，但客单价和品质仍有提升空间。
+</div>
+
+</section>
+
+<!-- ================================================
+     SECTION 4: 星级×省份
+     ================================================ -->
+<section id="star_prov">
+
+<div class="method-note">
+  <strong>⚙️ 星级×省份分析口径说明</strong>
+  <ul>
+    <li><b>省份维度</b>：按「酒店所在省份」分组，展示各省份高星率/8天+预定率年度变化</li>
+    <li><b>高星率变化</b>：2026年高星占比% - 2025年高星占比%，单位为百分点（pp）</li>
+    <li><b>综合新增得分</b>：高星新增订单量 + 主节假日出游新增量 + Tapp新增量（衡量各省份新增需求体量）</li>
+  </ul>
+</div>
+
+<p class="page-title">🏨 星级 × 省份维度：新增需求地理分布</p>
+<p class="page-sub">清明春假城市口径 | 2025 vs 2026 | 高星需求与规划性需求在各省的增长</p>
+
+<div class="card">
+  <div class="card-title">📊 各省份高星率年度变化（2025 → 2026）</div>
+  <div class="card-subtitle">气泡大小=2026年订单量，颜色=高星率变化方向 | 仅展示2025年订单量≥500单的省份</div>
+  <div class="chart-wrap tall">
+    <canvas id="provStarChart"></canvas>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="card-title">📊 高星需求新增最强的TOP10省份</div>
+    <div class="card-subtitle">高星率差值pp = 2026高星% - 2025高星%</div>
+    <table class="data-table"><thead><tr><th>排名</th><th>省份</th><th>2025高星%</th><th>2026高星%</th><th>差值pp</th><th>2026订单量</th></tr></thead>
+    <tbody id="star-top10"></tbody></table>
+  </div>
+  <div class="card">
+    <div class="card-title">📊 8天+预定增长最快的TOP10省份</div>
+    <div class="card-subtitle">提前预定反映规划性出行需求强度</div>
+    <table class="data-table"><thead><tr><th>排名</th><th>省份</th><th>2025 8天+%</th><th>2026 8天+%</th><th>变化pp</th><th>2026订单量</th></tr></thead>
+    <tbody id="adv-top10"></tbody></table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">📋 各省份 2025-2026 高星率 &amp; 8天+预定率 完整数据表</div>
+  <table class="data-table">
+    <thead><tr><th>省份</th><th class="num">2025<br>订单量</th><th class="num">2026<br>订单量</th><th class="num">2025<br>高星%</th><th class="num">2026<br>高星%</th><th class="num">高星<br>变化pp</th><th class="num">2025<br>8天+%</th><th class="num">2026<br>8天+%</th><th class="num">8天+<br>变化pp</th></tr></thead>
+    <tbody id="prov-full-tbody"></tbody>
+  </table>
+</div>
+
+</section>
+
+<!-- ================================================
+     SECTION 5: 订单类型差异
+     ================================================ -->
+<section id="order_type">
+
+<div class="method-note">
+  <strong>⚙️ 订单类型差异分析口径说明</strong>
+  <ul>
+    <li><b>订单类型差异</b>：清明春假城市 vs 非清明春假城市在同一节假日期间的订单结构差异</li>
+    <li><b>城市类型差异</b>：五一春假城市 vs 非五一春假城市的订单结构差异</li>
+    <li><b>差值pp</b>：春假城市该指标占比% - 非春假城市该指标占比%（百分点差值）</li>
+    <li><b>正值说明</b>：春假城市该维度占比高于非春假城市，反映新增需求特征</li>
+  </ul>
+</div>
+
+<p class="page-title">🔍 两类春假城市 × 节假日期间 订单类型差异分析</p>
+<p class="page-sub">2026年数据为主 | 对比春假城市与非春假城市的客群结构、酒店选择、预订行为差异</p>
+
+<div class="card">
+  <div class="card-title">📋 2026年 清明春假城市 vs 非清明春假城市 订单结构对比</div>
+  <div class="card-subtitle">各指标占比% | 差值pp = 清明春假城市% - 非清明春假城市%</div>
+  <table class="data-table">
+    <thead><tr><th>维度</th><th>指标</th><th>清明春假城市<br>春假-清明</th><th>非清明春假城市<br>春假-清明</th><th>差值pp<br>春假-清明</th><th>清明春假城市<br>清明</th><th>非清明春假城市<br>清明</th><th>差值pp<br>清明</th></tr></thead>
+    <tbody id="order-type-qm-tbody"></tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="card-title">📋 2026年 五一春假城市 vs 非五一春假城市 订单结构对比</div>
+  <div class="card-subtitle">各指标占比% | 差值pp = 五一春假城市% - 非五一春假城市%</div>
+  <table class="data-table">
+    <thead><tr><th>维度</th><th>指标</th><th>五一春假城市<br>春假-清明</th><th>非五一春假城市<br>春假-清明</th><th>差值pp<br>春假-清明</th><th>五一春假城市<br>清明</th><th>非五一春假城市<br>清明</th><th>差值pp<br>清明</th></tr></thead>
+    <tbody id="order-type-wy-tbody"></tbody>
+  </table>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="card-title">📊 2026年 清明春假城市 vs 非清明春假城市 指标差值pp（春假-清明期间）</div>
+    <div class="chart-wrap tall">
+      <canvas id="diffBarQmChart"></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">📊 2026年 清明春假城市 vs 非清明春假城市 指标差值pp（清明期间）</div>
+    <div class="chart-wrap tall">
+      <canvas id="diffBarQmQingChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="info-box green">
+  <strong>✅ 关键差异总结：清明春假城市 vs 非清明春假城市</strong><br>
+  ① <strong>高星需求更强</strong>：城市口径高星率高于非城市，春假-清明期间差+4.8pp，清明期间差+5.8pp<br>
+  ② <strong>规划性更强</strong>：8天+预定率城市口径显著更高（+17.5pp/春假-清明，+4.1pp/清明）<br>
+  ③ <strong>主节假日出游更集中</strong>：城市口径反映节假日专程出游的客群比例更高<br>
+  ④ <strong>同省短途更多</strong>：同省订单城市口径占比更高（+4.4pp），说明本省居民是主要客源
+</div>
+
+</section>
+
+<!-- ================================================
+     SECTION 6: METHODOLOGY
+     ================================================ -->
+<section id="methodology">
+<p class="page-title">📖 指标计算口径详解</p>
+<p class="page-sub">所有指标的计算公式、数据来源、注意事项均在此说明</p>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="card-title">📐 体量指标</div>
+    <table class="data-table">
+      <thead><tr><th>指标</th><th>计算公式</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td><b>订单量</b></td><td>sum(订单量字段)</td><td>指分组内所有记录行的订单量加总值（条）</td></tr>
+        <tr><td><b>总间夜</b></td><td>sum(总间夜字段)</td><td>分组内所有订单的间夜总量（晚）</td></tr>
+        <tr><td><b>人均间夜</b></td><td>总间夜 / 订单量</td><td>每单平均入住晚数</td></tr>
+        <tr><td><b>总收入</b></td><td>sum(总收入字段)</td><td>分组内酒店实际收入总和（元）</td></tr>
+        <tr><td><b>间夜收入</b></td><td>总收入 / 总间夜</td><td>每间夜平均收入</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title">📐 价格类指标</div>
+    <table class="data-table">
+      <thead><tr><th>指标</th><th>计算公式</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td><b>加权间夜均价</b></td><td>sum(间夜均价×间夜数)/sum(间夜数)</td><td>以间夜数为权重的加权平均间夜售价，消除大单/小单扰动</td></tr>
+        <tr><td><b>间夜均价</b></td><td>总售价 / 总间夜</td><td>每条记录的单价，非加权</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title">📐 占比类指标（分子/分母）</div>
+    <table class="data-table">
+      <thead><tr><th>指标</th><th>分子（筛选条件）</th><th>分母</th></tr></thead>
+      <tbody>
+        <tr><td><b>高星占比%</b></td><td>星级分类='高星（4-5星）'</td><td>该分组总订单量</td></tr>
+        <tr><td><b>异省占比%</b></td><td>订单本异省判断='异省订单'</td><td>该分组总订单量</td></tr>
+        <tr><td><b>主节假日出游%</b></td><td>客群旅行特征分类='主节假日出游'</td><td>该分组总订单量</td></tr>
+        <tr><td><b>老客%</b></td><td>客户生命周期类型='老客'</td><td>该分组总订单量</td></tr>
+        <tr><td><b>8天+预定%</b></td><td>提前预定时长 ≥ 8</td><td>该分组总订单量</td></tr>
+        <tr><td><b>Tapp%</b></td><td>订单渠道='Tapp'</td><td>该分组总订单量</td></tr>
+        <tr><td><b>红包使用%</b></td><td>红包金额 &gt; 0</td><td>该分组总订单量</td></tr>
+        <tr><td><b>平均提前预定天数</b></td><td>mean(提前预定时长)</td><td>该分组所有记录的平均值（非加权）</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title">📐 YoY指标</div>
+    <table class="data-table">
+      <thead><tr><th>指标</th><th>计算公式</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td><b>YoY%</b></td><td>(V2026 - V2025) / V2025 × 100%</td><td>年度同比变化率</td></tr>
+        <tr><td><b>差值pp</b></td><td>V城市 - V非城市</td><td>春假城市vs非春假城市的占比百分点差</td></tr>
+        <tr><td><b>pp变化</b></td><td>2026差值pp - 2025差值pp</td><td>城市vs非城市差距是否在扩大</td></tr>
+        <tr><td><b>高星新增量</b></td><td>(城市高星率 - 非城市高星率) × 城市总订单量</td><td>由春假城市特征贡献的高星增量</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">📌 数据集基本信息</div>
+  <div class="meta-grid">
+    <div class="meta-item">
+      <div class="meta-item-title">数据范围</div>
+      <table><tr><td>离店年份</td><td>2025、2026</td></tr>
+      <tr><td>节假日类型</td><td>03.春假-清明、04.清明</td></tr>
+      <tr><td>总记录数</td><td>814,099 条</td></tr>
+      <tr><td>2025记录数</td><td>404,982 条</td></tr>
+      <tr><td>2026记录数</td><td>409,117 条</td></tr>
+      <tr><td>酒店所在省份</td><td>31个省级行政区</td></tr>
+      <tr><td>客户常住省份</td><td>32个（含港澳台等）</td></tr>
+      <tr><td>客群分类</td><td>11类</td></tr>
+      <tr><td>订单渠道</td><td>12类</td></tr>
+    </div>
+    <div class="meta-item">
+      <div class="meta-item-title">城市分类说明</div>
+      <table>
+        <tr><td>清明春假城市</td><td>江苏/四川/浙江省的城市（是否清明春假城市=1）</td></tr>
+        <tr><td>五一春假城市</td><td>浙江省/上海市为主（是否五一春假城市=1）</td></tr>
+        <tr><td>非清明春假城市</td><td>除清明春假城市外的其他城市</td></tr>
+        <tr><td>非五一春假城市</td><td>除五一春假城市外的其他城市</td></tr>
+        <tr><td>两类城市交集</td><td>浙江省城市同时属于两类春假城市</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+</section>
+
+</div><!-- end container -->
+
+<script>
+// ===== DATA =====
+const qmqcData = [
+  // 清明春假城市
+  {yr:2025,hol:'03.春假-清明',grp:'清明春假城市',orders:91495,nights:104909,revenue:1967532,avg_nights:1.147,wavg_price:172.98,high_star:12.37,mid_star:23.04,low_star:64.59,cross_prov:36.79,hol_main:5.71,wknd:42.99,old:89.15,bg_new:6.66,adv8:23.51,tapp:9.34,avg_adv:1.80},
+  {yr:2025,hol:'04.清明',     grp:'清明春假城市',orders:137785,nights:168769,revenue:4288059,avg_nights:1.225,wavg_price:228.20,high_star:14.32,mid_star:21.71,low_star:63.97,cross_prov:36.78,hol_main:28.05,wknd:23.62,old:81.95,bg_new:10.93,adv8:66.02,tapp:14.30,avg_adv:11.25},
+  {yr:2026,hol:'03.春假-清明',grp:'清明春假城市',orders:124684,nights:149337,revenue:3587821,avg_nights:1.198,wavg_price:221.19,high_star:18.93,mid_star:24.02,low_star:57.05,cross_prov:36.70,hol_main:9.24,wknd:35.77,old:86.30,bg_new:8.51,adv8:51.28,tapp:15.59,avg_adv:8.62},
+  {yr:2026,hol:'04.清明',     grp:'清明春假城市',orders:171793,nights:224206,revenue:6770272,avg_nights:1.305,wavg_price:285.39,high_star:21.63,mid_star:22.47,low_star:55.90,cross_prov:37.81,hol_main:34.41,wknd:19.30,old:81.50,bg_new:11.36,adv8:75.72,tapp:20.37,avg_adv:19.57},
+  // 非清明春假城市
+  {yr:2025,hol:'03.春假-清明',grp:'非清明春假城市',orders:1002829,nights:1165372,revenue:22319795,avg_nights:1.162,wavg_price:172.03,high_star:11.78,mid_star:24.43,low_star:63.79,cross_prov:42.11,hol_main:5.67,wknd:44.02,old:87.71,bg_new:7.32,adv8:26.59,tapp:7.72,avg_adv:2.50},
+  {yr:2025,hol:'04.清明',     grp:'非清明春假城市',orders:1542503,nights:1905196,revenue:43932199,avg_nights:1.235,wavg_price:207.16,high_star:12.55,mid_star:22.66,low_star:64.79,cross_prov:41.80,hol_main:28.78,wknd:23.44,old:81.02,bg_new:11.25,adv8:64.95,tapp:11.85,avg_adv:11.96},
+  {yr:2026,hol:'03.春假-清明',grp:'非清明春假城市',orders:1117484,nights:1307668,revenue:25011472,avg_nights:1.170,wavg_price:179.68,high_star:14.12,mid_star:25.00,low_star:60.88,cross_prov:40.33,hol_main:6.79,wknd:39.42,old:87.01,bg_new:7.24,adv8:33.75,tapp:10.14,avg_adv:3.70},
+  {yr:2026,hol:'04.清明',     grp:'非清明春假城市',orders:1624042,nights:2056418,revenue:47949001,avg_nights:1.266,wavg_price:224.54,high_star:15.84,mid_star:23.59,low_star:60.57,cross_prov:41.82,hol_main:31.41,wknd:21.38,old:81.44,bg_new:10.56,adv8:71.64,tapp:14.95,avg_adv:16.04},
+];
+
+const wuyiData = [
+  // 五一春假城市
+  {yr:2025,hol:'03.春假-清明',grp:'五一春假城市',orders:56018,nights:63638,revenue:1224296,avg_nights:1.136,wavg_price:181.51,high_star:13.15,mid_star:22.40,low_star:64.45,cross_prov:39.83,hol_main:5.97,wknd:43.52,old:88.25,bg_new:7.15,adv8:24.33,tapp:8.82,avg_adv:1.86},
+  {yr:2025,hol:'04.清明',     grp:'五一春假城市',orders:80132,nights:95708,revenue:2399020,avg_nights:1.194,wavg_price:230.87,high_star:14.97,mid_star:21.52,low_star:63.51,cross_prov:38.98,hol_main:28.25,wknd:23.50,old:82.18,bg_new:10.82,adv8:66.35,tapp:12.62,avg_adv:10.35},
+  {yr:2026,hol:'03.春假-清明',grp:'五一春假城市',orders:60492,nights:70404,revenue:1385497,avg_nights:1.164,wavg_price:188.38,high_star:15.21,mid_star:22.26,low_star:62.53,cross_prov:33.85,hol_main:6.51,wknd:40.20,old:88.84,bg_new:6.78,adv8:32.60,tapp:11.38,avg_adv:3.15},
+  {yr:2026,hol:'04.清明',     grp:'五一春假城市',orders:80626,nights:97945,revenue:2471522,avg_nights:1.215,wavg_price:247.28,high_star:18.11,mid_star:22.25,low_star:60.64,cross_prov:34.08,hol_main:29.03,wknd:22.34,old:82.93,bg_new:10.14,adv8:76.43,tapp:15.75,avg_adv:15.03},
+  // 非五一春假城市
+  {yr:2025,hol:'03.春假-清明',grp:'非五一春假城市',orders:1038306,nights:1206643,revenue:23063031,avg_nights:1.162,wavg_price:171.61,high_star:11.76,mid_star:24.41,low_star:63.83,cross_prov:41.76,hol_main:5.66,wknd:43.95,old:87.81,bg_new:7.27,adv8:26.44,tapp:7.81,avg_adv:2.47},
+  {yr:2025,hol:'04.清明',     grp:'非五一春假城市',orders:1600156,nights:1978257,revenue:45821238,avg_nights:1.236,wavg_price:207.81,high_star:12.58,mid_star:22.58,low_star:64.78,cross_prov:41.50,hol_main:28.75,wknd:23.45,old:81.04,bg_new:11.24,adv8:64.97,tapp:12.02,avg_adv:11.97},
+  {yr:2026,hol:'03.春假-清明',grp:'非五一春假城市',orders:1181676,nights:1386601,revenue:27213796,avg_nights:1.173,wavg_price:183.70,high_star:14.58,mid_star:25.03,low_star:60.39,cross_prov:40.28,hol_main:7.06,wknd:39.00,old:86.84,bg_new:7.39,adv8:35.66,tapp:10.65,avg_adv:4.27},
+  {yr:2026,hol:'04.清明',     grp:'非五一春假城市',orders:1715209,nights:2182679,revenue:52247752,avg_nights:1.273,wavg_price:229.77,high_star:16.31,mid_star:24.03,low_star:59.66,cross_prov:40.10,hol_main:31.82,wknd:21.13,old:81.38,bg_new:10.66,adv8:71.82,tapp:15.46,avg_adv:16.44},
+];
+
+const provData = [
+  {prov:'江苏',y25:63896,y26:85520,hs25:12.05,hs26:16.69,adv25:64.16,adv26:79.84},
+  {prov:'四川',y25:62298,y26:77928,hs25:13.08,hs26:17.16,adv25:58.61,adv26:70.95},
+  {prov:'浙江',y25:34190,y26:43262,hs25:13.79,hs26:20.63,adv25:34.24,adv26:48.19},
+  {prov:'安徽',y25:7228,y26:9835,hs25:14.75,hs26:24.34,adv25:47.45,adv26:69.57},
+  {prov:'云南',y25:3825,y26:6393,hs25:14.14,hs26:26.03,adv25:34.12,adv26:59.80},
+  {prov:'重庆',y25:5913,y26:7568,hs25:17.01,hs26:26.63,adv25:52.90,adv26:69.71},
+  {prov:'广东',y25:6795,y26:7798,hs25:13.04,hs26:24.93,adv25:23.36,adv26:45.01},
+  {prov:'上海',y25:6846,y26:8095,hs25:14.46,hs26:25.46,adv25:47.62,adv26:64.82},
+  {prov:'陕西',y25:2894,y26:4422,hs25:16.55,hs26:30.48,adv25:37.21,adv26:64.07},
+  {prov:'北京',y25:1970,y26:3961,hs25:17.87,hs26:30.85,adv25:34.11,adv26:74.27},
+  {prov:'江西',y25:4128,y26:5853,hs25:18.48,hs26:27.90,adv25:34.21,adv26:58.74},
+  {prov:'山东',y25:4030,y26:5091,hs25:16.35,hs26:28.76,adv25:47.37,adv26:55.90},
+  {prov:'贵州',y25:3481,y26:4650,hs25:11.17,hs26:21.61,adv25:26.52,adv26:42.92},
+  {prov:'广西',y25:1514,y26:2734,hs25:17.97,hs26:34.82,adv25:13.61,adv26:53.88},
+  {prov:'海南',y25:1149,y26:1581,hs25:32.72,hs26:50.85,adv25:20.80,adv26:46.30},
+  {prov:'河南',y25:3684,y26:4863,hs25:9.66,hs26:22.60,adv25:32.06,adv26:61.01},
+  {prov:'湖南',y25:2421,y26:2785,hs25:18.22,hs26:29.26,adv25:25.32,adv26:40.00},
+  {prov:'湖北',y25:2656,y26:3183,hs25:15.32,hs26:30.16,adv25:33.85,adv26:49.01},
+  {prov:'福建',y25:2457,y26:3019,hs25:17.30,hs26:30.71,adv25:17.50,adv26:45.51},
+  {prov:'甘肃',y25:1433,y26:1300,hs25:12.63,hs26:19.92,adv25:15.49,adv26:23.31},
+  {prov:'新疆',y25:917,y26:946,hs25:17.56,hs26:31.50,adv25:9.16,adv26:10.89},
+  {prov:'河北',y25:1226,y26:1026,hs25:8.81,hs26:12.18,adv25:10.69,adv26:17.74},
+];
+
+// ===== HELPERS =====
+function fmtNum(v) {
+  if (v >= 100000000) return (v/100000000).toFixed(1)+'亿';
+  if (v >= 10000) return (v/10000).toFixed(1)+'万';
+  return v.toLocaleString();
+}
+function fmt(v, dec=1) { return typeof v==='number' ? v.toFixed(dec) : '—'; }
+function yoy(v25, v26) {
+  if (!v25 || v25===0) return '—';
+  return ((v26-v25)/v25*100).toFixed(1)+'%';
+}
+function yoySign(v25, v26) {
+  if (!v25 || v25===0) return null;
+  const pct = ((v26-v25)/v25*100);
+  return pct;
+}
+function diff(a, b) { return (a-b).toFixed(1)+'pp'; }
+function positiveCss(v) { return v>=0 ? 'positive' : 'negative'; }
+function tagClass(v) { return v>=0 ? 'tag-green' : 'tag-red'; }
+function sign(v) { return v>=0 ? '+' : ''; }
+
+// ===== SECTION NAVIGATION =====
+function showSection(id) {
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// ===== SECTION 1: OVERVIEW TABLES & CHARTS =====
+
+// Overview table
+function buildOverviewTable() {
+  const tbody = document.getElementById('overview-tbody');
+  const rows = [
+    {hol:'03.春假-清明',yr:2025,grp:'清明春假城市'},
+    {hol:'03.春假-清明',yr:2026,grp:'清明春假城市'},
+    {hol:'03.春假-清明',yr:2025,grp:'非清明春假城市'},
+    {hol:'03.春假-清明',yr:2026,grp:'非清明春假城市'},
+    {hol:'04.清明',     yr:2025,grp:'清明春假城市'},
+    {hol:'04.清明',     yr:2026,grp:'清明春假城市'},
+    {hol:'04.清明',     yr:2025,grp:'非清明春假城市'},
+    {hol:'04.清明',     yr:2026,grp:'非清明春假城市'},
+  ];
+  let html = '';
+  rows.forEach(r => {
+    const d = qmqcData.find(x=>x.yr===r.yr&&x.hol===r.hol&&x.grp===r.grp);
+    if (!d) return;
+    const isCity = r.grp==='清明春假城市';
+    const rowClass = (r.yr===2026&&isCity) ? 'style="background:#ebf4ff"' : '';
+    const y25 = qmqcData.find(x=>x.yr===2025&&x.hol===r.hol&&x.grp===r.grp);
+    const yoyOrders = yoy(y25.orders, d.orders);
+    html += `<tr ${rowClass}>
+      <td>${r.hol}</td>
+      <td class="num ${r.yr===2026?'t26':'t25'}">${r.yr}</td>
+      <td class="num">${fmtNum(d.orders)}</td>
+      <td class="num">${fmtNum(d.nights)}</td>
+      <td class="num">${fmtNum(d.revenue)}</td>
+      <td class="num">${fmt(d.avg_nights)}</td>
+      <td class="num">${fmt(d.wavg_price,0)}</td>
+      <td class="num ${r.yr===2026&&isCity?'positive':''}">${fmt(d.high_star)}%</td>
+      <td class="num">${fmt(d.low_star)}%</td>
+      <td class="num">${fmt(d.cross_prov)}%</td>
+      <td class="num">${fmt(d.hol_main)}%</td>
+      <td class="num">${fmt(d.old)}%</td>
+      <td class="num ${r.yr===2026&&isCity?'positive':''}">${fmt(d.adv8)}%</td>
+      <td class="num ${r.yr===2026&&isCity?'positive':''}">${fmt(d.tapp)}%</td>
+      <td class="num ${r.yr===2026&&isCity?'positive':''}">${fmt(d.avg_adv)}</td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+// KPI YoY chart
+function buildKpiYoyChart() {
+  const ctx = document.getElementById('kpiYoyChart');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['订单量', '总收入', '加权间夜均价', '高星占比', '8天+预定', 'Tapp占比', '平均提前天数'],
+      datasets: [
+        {
+          label: '春假-清明 YoY%',
+          data: [36.3, 82.4, 27.9, 53.0, 118.1, 66.9, 379.0],
+          backgroundColor: '#2b6cb0cc',
+          borderRadius: 4,
+        },
+        {
+          label: '清明 YoY%',
+          data: [24.7, 57.9, 25.1, 51.1, 14.7, 42.5, 74.0],
+          backgroundColor: '#ed8936cc',
+          borderRadius: 4,
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'top' }, datalabels: { display: false } },
+      scales: { y: { title: { display: true, text: 'YoY%' } } }
+    }
+  });
+}
+
+// Order bar chart
+function buildOrderBarChart() {
+  const ctx = document.getElementById('orderBarChart');
+  const labels = ['2025 清明春假城市', '2026 清明春假城市', '2025 非清明春假城市', '2026 非清明春假城市', '2025 五一春假城市', '2026 五一春假城市'];
+  const data = [91495, 124684, 1002829, 1117484, 56018, 60492];
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['清明春假城市\n春假-清明', '清明春假城市\n春假-清明', '非清明春假\n春假-清明', '非清明春假\n春假-清明', '五一春假城市\n春假-清明', '五一春假城市\n春假-清明'],
+      datasets: [{
+        label: '订单量（条）',
+        data: data,
+        backgroundColor: [
+          '#2b6cb055', '#2b6cb0cc',
+          '#71809655', '#718096cc',
+          '#48bb7855', '#48bb78cc',
+        ],
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, datalabels: { display: false } },
+      scales: { y: { title: { display: true, text: '订单量（条）' } } }
+    }
+  });
+}
+
+// Province table
+function buildProvTable() {
+  const tbody = document.getElementById('prov-tbody');
+  const sorted = [...provData].filter(p=>p.y25>=1000).sort((a,b)=>(b.hs26-b.hs25)-(a.hs26-a.hs25));
+  let html = '';
+  sorted.forEach((p,i) => {
+    const hsDiff = p.hs26 - p.hs25;
+    const advDiff = p.adv26 - p.adv25;
+    html += `<tr>
+      <td><b>${p.prov}</b></td>
+      <td class="num">${fmtNum(p.y25)}</td>
+      <td class="num t25">${fmt(p.hs25)}%</td>
+      <td class="num t26">${fmt(p.hs26)}%</td>
+      <td class="num ${positiveCss(hsDiff)}">${sign(hsDiff)}${fmt(hsDiff)}pp</td>
+      <td class="num">${fmt(p.adv25)}%</td>
+      <td class="num">${fmt(p.adv26)}%</td>
+      <td class="num ${positiveCss(advDiff)}">${sign(advDiff)}${fmt(advDiff)}pp</td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+// ===== SECTION 2: 清明春假城市 YoY =====
+
+function buildQmqcYoyTable() {
+  const tbody = document.getElementById('qmqc-yoy-tbody');
+  const metrics = [
+    {k:'orders',   label:'订单量',   fmt:v=>fmtNum(v),   note:'sum(订单量字段)'},
+    {k:'revenue',  label:'总收入',  fmt:v=>fmtNum(v),   note:'sum(总收入字段)，元'},
+    {k:'wavg_price',label:'加权间夜均价',fmt:v=>'¥'+fmt(v,0), note:'(间夜均价×间夜数)/总间夜数'},
+    {k:'high_star', label:'高星占比%', fmt:v=>fmt(v)+'%', note:"星级分类='高星（4-5星）'的订单量/总订单量×100%"},
+    {k:'low_star',  label:'低星占比%', fmt:v=>fmt(v)+'%', note:"星级分类='低星（0-2星）'的订单量/总订单量×100%"},
+    {k:'cross_prov',label:'异省占比%', fmt:v=>fmt(v)+'%', note:"订单本异省判断='异省订单'的订单量/总订单量×100%"},
+    {k:'hol_main',  label:'主节假日出游%',fmt:v=>fmt(v)+'%', note:"客群旅行特征分类='主节假日出游'的订单量/总订单量×100%"},
+    {k:'wknd',      label:'主周末游%',  fmt:v=>fmt(v)+'%', note:"客群旅行特征分类='主周末游'的订单量/总订单量×100%"},
+    {k:'old',       label:'老客%',       fmt:v=>fmt(v)+'%', note:"客户生命周期类型='老客'的订单量/总订单量×100%"},
+    {k:'adv8',      label:'8天+预定%',  fmt:v=>fmt(v)+'%', note:"提前预定时长≥8天的订单量/总订单量×100%"},
+    {k:'tapp',      label:'Tapp占比%', fmt:v=>fmt(v)+'%', note:"订单渠道='Tapp'的订单量/总订单量×100%"},
+    {k:'avg_adv',   label:'平均提前预定天数', fmt:v=>fmt(v,2), note:'mean(提前预定时长)，所有记录算术平均'},
+  ];
+  let html = '';
+  metrics.forEach(m => {
+    const c25sp = qmqcData.find(x=>x.yr===2025&&x.hol==='03.春假-清明'&&x.grp==='清明春假城市');
+    const c26sp = qmqcData.find(x=>x.yr===2026&&x.hol==='03.春假-清明'&&x.grp==='清明春假城市');
+    const c25qm = qmqcData.find(x=>x.yr===2025&&x.hol==='04.清明'&&x.grp==='清明春假城市');
+    const c26qm = qmqcData.find(x=>x.yr===2026&&x.hol==='04.清明'&&x.grp==='清明春假城市');
+    const yoySp = yoySign(c25sp[m.k], c26sp[m.k]);
+    const yoyQm = yoySign(c25qm[m.k], c26qm[m.k]);
+    html += `<tr>
+      <td><b>${m.label}</b></td>
+      <td style="font-size:11px;color:var(--text-light)">${m.note}</td>
+      <td class="num t25">${m.fmt(c25sp[m.k])}</td>
+      <td class="num t26">${m.fmt(c26sp[m.k])}</td>
+      <td class="num ${positiveCss(yoySp)}">${yoySp!==null?sign(yoySp)+fmt(yoySp,1)+'%':'—'}</td>
+      <td class="num t25">${m.fmt(c25qm[m.k])}</td>
+      <td class="num t26">${m.fmt(c26qm[m.k])}</td>
+      <td class="num ${positiveCss(yoyQm)}">${yoyQm!==null?sign(yoyQm)+fmt(yoyQm,1)+'%':'—'}</td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+function buildQmqcDiffTable() {
+  const tbody = document.getElementById('qmqc-diff-tbody');
+  const metrics = ['orders','revenue','wavg_price','high_star','adv8','tapp','avg_adv','hol_main','cross_prov'];
+  const labels = {orders:'订单量YoY%',revenue:'总收入YoY%',wavg_price:'加权间夜均价YoY%',high_star:'高星占比YoY%',adv8:'8天+预定YoY%',tapp:'Tapp占比YoY%',avg_adv:'平均提前预定YoY%',hol_main:'主节假日出游YoY%',cross_prov:'异省占比YoY%'};
+  let html = '';
+  metrics.forEach(k => {
+    const c25sp_city = qmqcData.find(x=>x.yr===2025&&x.hol==='03.春假-清明'&&x.grp==='清明春假城市')[k];
+    const c26sp_city = qmqcData.find(x=>x.yr===2026&&x.hol==='03.春假-清明'&&x.grp==='清明春假城市')[k];
+    const c25sp_non  = qmqcData.find(x=>x.yr===2025&&x.hol==='03.春假-清明'&&x.grp==='非清明春假城市')[k];
+    const c26sp_non  = qmqcData.find(x=>x.yr===2026&&x.hol==='03.春假-清明'&&x.grp==='非清明春假城市')[k];
+    const c25qm_city = qmqcData.find(x=>x.yr===2025&&x.hol==='04.清明'&&x.grp==='清明春假城市')[k];
+    const c26qm_city = qmqcData.find(x=>x.yr===2026&&x.hol==='04.清明'&&x.grp==='清明春假城市')[k];
+    const c25qm_non  = qmqcData.find(x=>x.yr===2025&&x.hol==='04.清明'&&x.grp==='非清明春假城市')[k];
+    const c26qm_non  = qmqcData.find(x=>x.yr===2026&&x.hol==='04.清明'&&x.grp==='非清明春假城市')[k];
+    const ysp_c = yoySign(c25sp_city,c26sp_city);
+    const ysp_n = yoySign(c25sp_non,c26sp_non);
+    const yqm_c = yoySign(c25qm_city,c26qm_city);
+    const yqm_n = yoySign(c25qm_non,c26qm_non);
+    const dsp = ysp_c!==null&&ysp_n!==null ? ysp_c-ysp_n : null;
+    const dqm = yqm_c!==null&&yqm_n!==null ? yqm_c-yqm_n : null;
+    html += `<tr>
+      <td><b>${labels[k]}</b></td><td></td>
+      <td class="num ${positiveCss(ysp_c)}">${ysp_c!==null?sign(ysp_c)+fmt(ysp_c,1)+'%':'—'}</td>
+      <td class="num ${positiveCss(ysp_n)}">${ysp_n!==null?sign(ysp_n)+fmt(ysp_n,1)+'%':'—'}</td>
+      <td class="num ${positiveCss(dsp)}">${dsp!==null?sign(dsp)+fmt(dsp,1)+'pp':'—'}</td>
+      <td class="num ${positiveCss(yqm_c)}">${yqm_c!==null?sign(yqm_c)+fmt(yqm_c,1)+'%':'—'}</td>
+      <td class="num ${positiveCss(yqm_n)}">${yqm_n!==null?sign(yqm_n)+fmt(yqm_n,1)+'%':'—'}</td>
+      <td class="num ${positiveCss(dqm)}">${dqm!==null?sign(dqm)+fmt(dqm,1)+'pp':'—'}</td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+function buildQmqcCharts() {
+  // Spring chart
+  const ctx1 = document.getElementById('qmqcSpringChart');
+  new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels: ['订单量\n（万单）','总收入\n（亿元）','加权间夜均价\n（元）','高星率\n（%）','8天+预定率\n（%）','Tapp率\n（%）'],
+      datasets: [
+        {label:'2025 春假-清明', data:[9.15,0.197,173,12.4,23.5,9.3], backgroundColor:'#a0aec0cc',borderRadius:4},
+        {label:'2026 春假-清明', data:[12.47,0.359,221,18.9,51.3,15.6], backgroundColor:'#2b6cb0cc',borderRadius:4},
+      ]
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'top'},datalabels:{display:false}}, scales:{y:{title:{display:true,text:'指标值'}}} }
+  });
+  // Qing chart
+  const ctx2 = document.getElementById('qmqcQingChart');
+  new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: ['订单量\n（万单）','总收入\n（亿元）','加权间夜均价\n（元）','高星率\n（%）','8天+预定率\n（%）','Tapp率\n（%）'],
+      datasets: [
+        {label:'2025 清明', data:[13.78,0.429,228,14.3,66.0,14.3], backgroundColor:'#a0aec0cc',borderRadius:4},
+        {label:'2026 清明', data:[17.18,0.677,285,21.6,75.7,20.4], backgroundColor:'#ed8936cc',borderRadius:4},
+      ]
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'top'},datalabels:{display:false}}, scales:{y:{title:{display:true,text:'指标值'}}} }
+  });
+}
+
+// ===== SECTION 3: 五一春假城市 YoY =====
+function buildWuyiYoyTable() {
+  const tbody = document.getElementById('wuyi-yoy-tbody');
+  const metrics = [
+    {k:'orders',   label:'订单量',   fmt:v=>fmtNum(v), note:'sum(订单量)'},
+    {k:'revenue',  label:'总收入',  fmt:v=>fmtNum(v), note:'sum(总收入)'},
+    {k:'wavg_price',label:'加权间夜均价',fmt:v=>'¥'+fmt(v,0), note:'(间夜均价×间夜数)/总间夜数'},
+    {k:'high_star', label:'高星占比%', fmt:v=>fmt(v)+'%', note:"星级='高星（4-5星）'的订单量/总订单量×100%"},
+    {k:'adv8',      label:'8天+预定%',  fmt:v=>fmt(v)+'%', note:"提前预定时长≥8天的订单量/总订单量×100%"},
+    {k:'tapp',      label:'Tapp占比%', fmt:v=>fmt(v)+'%', note:"订单渠道='Tapp'"},
+    {k:'avg_adv',   label:'平均提前预定天数', fmt:v=>fmt(v,2), note:'算术平均'},
+    {k:'hol_main',  label:'主节假日出游%', fmt:v=>fmt(v)+'%', note:"客群旅行特征='主节假日出游'"},
+  ];
+  let html = '';
+  metrics.forEach(m => {
+    const c25sp = wuyiData.find(x=>x.yr===2025&&x.hol==='03.春假-清明'&&x.grp==='五一春假城市');
+    const c26sp = wuyiData.find(x=>x.yr===2026&&x.hol==='03.春假-清明'&&x.grp==='五一春假城市');
+    const c25qm = wuyiData.find(x=>x.yr===2025&&x.hol==='04.清明'&&x.grp==='五一春假城市');
+    const c26qm = wuyiData.find(x=>x.yr===2026&&x.hol==='04.清明'&&x.grp==='五一春假城市');
+    const yoySp = yoySign(c25sp[m.k], c26sp[m.k]);
+    const yoyQm = yoySign(c25qm[m.k], c26qm[m.k]);
+    html += `<tr>
+      <td><b>${m.label}</b></td><td style="font-size:11px;color:var(--text-light)">${m.note}</td>
+      <td class="num t25">${m.fmt(c25sp[m.k])}</td>
+      <td class="num t26">${m.fmt(c26sp[m.k])}</td>
+      <td class="num ${positiveCss(yoySp)}">${yoySp!==null?sign(yoySp)+fmt(yoySp,1)+'%':'—'}</td>
+      <td class="num t25">${m.fmt(c25qm[m.k])}</td>
+      <td class="num t26">${m.fmt(c26qm[m.k])}</td>
+      <td class="num ${positiveCss(yoyQm)}">${yoyQm!==null?sign(yoyQm)+fmt(yoyQm,1)+'%':'—'}</td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+function buildWuyiDiffTable() {
+  const tbody = document.getElementById('wuyi-diff-tbody');
+  const metrics = ['orders','revenue','wavg_price','high_star','adv8','tapp','avg_adv','hol_main'];
+  const labels = {orders:'订单量YoY%',revenue:'总收入YoY%',wavg_price:'加权间夜均价YoY%',high_star:'高星占比YoY%',adv8:'8天+预定YoY%',tapp:'Tapp占比YoY%',avg_adv:'平均提前预定YoY%',hol_main:'主节假日出游YoY%'};
+  let html = '';
+  metrics.forEach(k => {
+    const c25sp_city = wuyiData.find(x=>x.yr===2025&&x.hol==='03.春假-清明'&&x.grp==='五一春假城市')[k];
+    const c26sp_city = wuyiData.find(x=>x.yr===2026&&x.hol==='03.春假-清明'&&x.grp==='五一春假城市')[k];
+    const c25sp_non  = wuyiData.find(x=>x.yr===2025&&x.hol==='03.春假-清明'&&x.grp==='非五一春假城市')[k];
+    const c26sp_non  = wuyiData.find(x=>x.yr===2026&&x.hol==='03.春假-清明'&&x.grp==='非五一春假城市')[k];
+    const c25qm_city = wuyiData.find(x=>x.yr===2025&&x.hol==='04.清明'&&x.grp==='五一春假城市')[k];
+    const c26qm_city = wuyiData.find(x=>x.yr===2026&&x.hol==='04.清明'&&x.grp==='五一春假城市')[k];
+    const c25qm_non  = wuyiData.find(x=>x.yr===2025&&x.hol==='04.清明'&&x.grp==='非五一春假城市')[k];
+    const c26qm_non  = wuyiData.find(x=>x.yr===2026&&x.hol==='04.清明'&&x.grp==='非五一春假城市')[k];
+    const ysp_c = yoySign(c25sp_city,c26sp_city);
+    const ysp_n = yoySign(c25sp_non,c26sp_non);
+    const yqm_c = yoySign(c25qm_city,c26qm_city);
+    const yqm_n = yoySign(c25qm_non,c26qm_non);
+    const dsp = ysp_c!==null&&ysp_n!==null ? ysp_c-ysp_n : null;
+    const dqm = yqm_c!==null&&yqm_n!==null ? yqm_c-yqm_n : null;
+    html += `<tr>
+      <td><b>${labels[k]}</b></td><td></td>
+      <td class="num ${positiveCss(ysp_c)}">${ysp_c!==null?sign(ysp_c)+fmt(ysp_c,1)+'%':'—'}</td>
+      <td class="num ${positiveCss(ysp_n)}">${ysp_n!==null?sign(ysp_n)+fmt(ysp_n,1)+'%':'—'}</td>
+      <td class="num ${positiveCss(dsp)}">${dsp!==null?sign(dsp)+fmt(dsp,1)+'pp':'—'}</td>
+      <td class="num ${positiveCss(yqm_c)}">${yqm_c!==null?sign(yqm_c)+fmt(yqm_c,1)+'%':'—'}</td>
+      <td class="num ${positiveCss(yqm_n)}">${yqm_n!==null?sign(yqm_n)+fmt(yqm_n,1)+'%':'—'}</td>
+      <td class="num ${positiveCss(dqm)}">${dqm!==null?sign(dqm)+fmt(dqm,1)+'pp':'—'}</td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+function buildWuyiCompCharts() {
+  const ctx1 = document.getElementById('wuyiCompChart');
+  new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels: ['订单量（万）','总收入（亿元）','加权间夜均价（元）','高星率（%）','8天+预定率（%）','Tapp率（%）'],
+      datasets: [
+        {label:'2026 清明春假城市', data:[12.47,0.359,221,18.9,51.3,15.6], backgroundColor:'#2b6cb0cc',borderRadius:4},
+        {label:'2026 五一春假城市', data:[6.05,0.139,188,15.2,32.6,11.4], backgroundColor:'#48bb78cc',borderRadius:4},
+      ]
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'top'},datalabels:{display:false}}, scales:{y:{title:{display:true,text:'指标值'}}} }
+  });
+  const ctx2 = document.getElementById('wuyiQingCompChart');
+  new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: ['订单量（万）','总收入（亿元）','加权间夜均价（元）','高星率（%）','8天+预定率（%）','Tapp率（%）'],
+      datasets: [
+        {label:'2026 清明春假城市', data:[17.18,0.677,285,21.6,75.7,20.4], backgroundColor:'#2b6cb0cc',borderRadius:4},
+        {label:'2026 五一春假城市', data:[8.06,0.247,247,18.1,76.4,15.8], backgroundColor:'#48bb78cc',borderRadius:4},
+      ]
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'top'},datalabels:{display:false}}, scales:{y:{title:{display:true,text:'指标值'}}} }
+  });
+}
+
+// ===== SECTION 4: Province Star Chart =====
+function buildProvStarChart() {
+  const ctx = document.getElementById('provStarChart');
+  const topProvs = provData.filter(p=>p.y25>=1000).sort((a,b)=>b.y26-b.y26-(a.y26-a.y25));
+  new Chart(ctx, {
+    type: 'bubble',
+    data: {
+      datasets: provData.filter(p=>p.y25>=1000).map(p => ({
+        label: p.prov,
+        data: [{x: p.hs25, y: p.hs26, r: Math.sqrt(p.y26)/50}],
+        backgroundColor: (p.hs26-p.hs25)>5 ? '#2b6cb0aa' : (p.hs26-p.hs25)>0 ? '#48bb78aa' : '#e53e3eaa',
+      }))
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const p = provData.find(x=>x.prov===ctx.dataset.label);
+              return `${p.prov}: 2025高星${p.hs25}% → 2026高星${p.hs26}% (+${fmt(p.hs26-p.hs25)}pp) | 订单${fmtNum(p.y26)}`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {title:{display:true,text:'2025年 高星占比%'}, min:5, max:40},
+        y: {title:{display:true,text:'2026年 高星占比%'}, min:10, max:60},
+      }
+    }
+  });
+}
+
+function buildStarTop10() {
+  const tbody = document.getElementById('star-top10');
+  const sorted = [...provData].filter(p=>p.y25>=1000).sort((a,b)=>(b.hs26-b.hs25)-(a.hs26-a.hs25)).slice(0,10);
+  let html='';
+  sorted.forEach((p,i) => {
+    const d = p.hs26-p.hs25;
+    html += `<tr>
+      <td>${i+1}</td><td><b>${p.prov}</b></td>
+      <td class="num t25">${fmt(p.hs25)}%</td>
+      <td class="num t26">${fmt(p.hs26)}%</td>
+      <td class="num ${positiveCss(d)}">${sign(d)}${fmt(d)}pp</td>
+      <td class="num">${fmtNum(p.y26)}</td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+function buildAdvTop10() {
+  const tbody = document.getElementById('adv-top10');
+  const sorted = [...provData].filter(p=>p.y25>=1000).sort((a,b)=>(b.adv26-b.adv25)-(a.adv26-a.adv25)).slice(0,10);
+  let html='';
+  sorted.forEach((p,i) => {
+    const d = p.adv26-p.adv25;
+    html += `<tr>
+      <td>${i+1}</td><td><b>${p.prov}</b></td>
+      <td class="num">${fmt(p.adv25)}%</td>
+      <td class="num">${fmt(p.adv26)}%</td>
+      <td class="num ${positiveCss(d)}">${sign(d)}${fmt(d)}pp</td>
+      <td class="num">${fmtNum(p.y26)}</td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+function buildProvFullTable() {
+  const tbody = document.getElementById('prov-full-tbody');
+  const sorted = [...provData].sort((a,b)=>b.y26-a.y26);
+  let html='';
+  sorted.forEach(p => {
+    const hsD = p.hs26-p.hs25;
+    const advD = p.adv26-p.adv25;
+    html += `<tr>
+      <td><b>${p.prov}</b></td>
+      <td class="num">${fmtNum(p.y25)}</td>
+      <td class="num">${fmtNum(p.y26)}</td>
+      <td class="num t25">${fmt(p.hs25)}%</td>
+      <td class="num t26">${fmt(p.hs26)}%</td>
+      <td class="num ${positiveCss(hsD)}">${sign(hsD)}${fmt(hsD)}pp</td>
+      <td class="num">${fmt(p.adv25)}%</td>
+      <td class="num">${fmt(p.adv26)}%</td>
+      <td class="num ${positiveCss(advD)}">${sign(advD)}${fmt(advD)}pp</td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+// ===== SECTION 5: Order Type Diff =====
+function buildOrderTypeQm() {
+  const tbody = document.getElementById('order-type-qm-tbody');
+  const city_sp = qmqcData.find(x=>x.yr===2026&&x.hol==='03.春假-清明'&&x.grp==='清明春假城市');
+  const non_sp  = qmqcData.find(x=>x.yr===2026&&x.hol==='03.春假-清明'&&x.grp==='非清明春假城市');
+  const city_qm = qmqcData.find(x=>x.yr===2026&&x.hol==='04.清明'&&x.grp==='清明春假城市');
+  const non_qm  = qmqcData.find(x=>x.yr===2026&&x.hol==='04.清明'&&x.grp==='非清明春假城市');
+  const metrics = [
+    {k:'high_star', label:'高星占比%', note:"星级分类='高星（4-5星）'"},
+    {k:'mid_star',  label:'中星占比%', note:"星级分类='中星（3星）'"},
+    {k:'low_star',  label:'低星占比%', note:"星级分类='低星（0-2星）'"},
+    {k:'cross_prov',label:'异省占比%', note:"订单本异省判断='异省订单'"},
+    {k:'hol_main',  label:'主节假日出游%', note:"客群旅行特征分类='主节假日出游'"},
+    {k:'wknd',      label:'主周末游%', note:"客群旅行特征分类='主周末游'"},
+    {k:'old',       label:'老客%', note:"客户生命周期类型='老客'"},
+    {k:'adv8',      label:'8天+预定%', note:"提前预定时长≥8天"},
+    {k:'tapp',      label:'Tapp占比%', note:"订单渠道='Tapp'"},
+  ];
+  let html='';
+  metrics.forEach(m => {
+    const d_sp = city_sp[m.k]-non_sp[m.k];
+    const d_qm = city_qm[m.k]-non_qm[m.k];
+    html += `<tr>
+      <td><b>${m.label}</b></td><td style="font-size:11px;color:var(--text-light)">${m.note}</td>
+      <td class="num t26">${fmt(city_sp[m.k])}%</td>
+      <td class="num">${fmt(non_sp[m.k])}%</td>
+      <td class="num ${positiveCss(d_sp)}">${sign(d_sp)}${fmt(d_sp)}pp</td>
+      <td class="num t26">${fmt(city_qm[m.k])}%</td>
+      <td class="num">${fmt(non_qm[m.k])}%</td>
+      <td class="num ${positiveCss(d_qm)}">${sign(d_qm)}${fmt(d_qm)}pp</td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+function buildOrderTypeWy() {
+  const tbody = document.getElementById('order-type-wy-tbody');
+  const city_sp = wuyiData.find(x=>x.yr===2026&&x.hol==='03.春假-清明'&&x.grp==='五一春假城市');
+  const non_sp  = wuyiData.find(x=>x.yr===2026&&x.hol==='03.春假-清明'&&x.grp==='非五一春假城市');
+  const city_qm = wuyiData.find(x=>x.yr===2026&&x.hol==='04.清明'&&x.grp==='五一春假城市');
+  const non_qm  = wuyiData.find(x=>x.yr===2026&&x.hol==='04.清明'&&x.grp==='非五一春假城市');
+  const metrics = [
+    {k:'high_star', label:'高星占比%'},
+    {k:'mid_star',  label:'中星占比%'},
+    {k:'low_star',  label:'低星占比%'},
+    {k:'cross_prov',label:'异省占比%'},
+    {k:'hol_main',  label:'主节假日出游%'},
+    {k:'wknd',      label:'主周末游%'},
+    {k:'old',       label:'老客%'},
+    {k:'adv8',      label:'8天+预定%'},
+    {k:'tapp',      label:'Tapp占比%'},
+  ];
+  let html='';
+  metrics.forEach(m => {
+    const d_sp = city_sp[m.k]-non_sp[m.k];
+    const d_qm = city_qm[m.k]-non_qm[m.k];
+    html += `<tr>
+      <td><b>${m.label}</b></td><td></td>
+      <td class="num">${fmt(city_sp[m.k])}%</td>
+      <td class="num">${fmt(non_sp[m.k])}%</td>
+      <td class="num ${positiveCss(d_sp)}">${sign(d_sp)}${fmt(d_sp)}pp</td>
+      <td class="num">${fmt(city_qm[m.k])}%</td>
+      <td class="num">${fmt(non_qm[m.k])}%</td>
+      <td class="num ${positiveCss(d_qm)}">${sign(d_qm)}${fmt(d_qm)}pp</td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+function buildDiffBarCharts() {
+  const labels = ['高星占比','中星占比','低星占比','异省占比','主节假日出游','主周末游','老客','8天+预定','Tapp占比'];
+  const city_sp = qmqcData.find(x=>x.yr===2026&&x.hol==='03.春假-清明'&&x.grp==='清明春假城市');
+  const non_sp  = qmqcData.find(x=>x.yr===2026&&x.hol==='03.春假-清明'&&x.grp==='非清明春假城市');
+  const city_qm = qmqcData.find(x=>x.yr===2026&&x.hol==='04.清明'&&x.grp==='清明春假城市');
+  const non_qm  = qmqcData.find(x=>x.yr===2026&&x.hol==='04.清明'&&x.grp==='非清明春假城市');
+  const keys = ['high_star','mid_star','low_star','cross_prov','hol_main','wknd','old','adv8','tapp'];
+  const diff_sp = keys.map(k => city_sp[k]-non_sp[k]);
+  const diff_qm = keys.map(k => city_qm[k]-non_qm[k]);
+  const colors_sp = diff_sp.map(v=>v>=0?'#2b6cb0':'#e53e3e');
+  const colors_qm = diff_qm.map(v=>v>=0?'#ed8936':'#e53e3e');
+
+  const ctx1 = document.getElementById('diffBarQmChart');
+  new Chart(ctx1, {
+    type: 'bar',
+    data: { labels, datasets: [{label:'清明春假-非清明春假城市 差值pp', data:diff_sp, backgroundColor:colors_sp.map(c=>c+'cc'),borderRadius:4}] },
+    options: { responsive:true, maintainAspectRatio:false, indexAxis:'y', plugins:{legend:{display:false},datalabels:{display:false}}, scales:{x:{title:{display:true,text:'差值pp（+为城市更高）'}}} }
+  });
+  const ctx2 = document.getElementById('diffBarQmQingChart');
+  new Chart(ctx2, {
+    type: 'bar',
+    data: { labels, datasets: [{label:'清明春假-非清明春假城市 差值pp', data:diff_qm, backgroundColor:colors_qm.map(c=>c+'cc'),borderRadius:4}] },
+    options: { responsive:true, maintainAspectRatio:false, indexAxis:'y', plugins:{legend:{display:false},datalabels:{display:false}}, scales:{x:{title:{display:true,text:'差值pp（+为城市更高）'}}} }
+  });
+}
+
+// ===== INIT =====
+buildOverviewTable();
+buildKpiYoyChart();
+buildOrderBarChart();
+buildProvTable();
+buildQmqcYoyTable();
+buildQmqcDiffTable();
+buildQmqcCharts();
+buildWuyiYoyTable();
+buildWuyiDiffTable();
+buildWuyiCompCharts();
+buildProvStarChart();
+buildStarTop10();
+buildAdvTop10();
+buildProvFullTable();
+buildOrderTypeQm();
+buildOrderTypeWy();
+buildDiffBarCharts();
+</script>
+</body>
+</html>
